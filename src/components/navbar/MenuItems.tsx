@@ -15,7 +15,7 @@ const MenuItems = ({ label, itemOnClick }: MenuItemsProps) => {
         "px-4 py-3 hover:bg-neutral-100 font-semibold transition-colors"
       }
     >
-      <p>{label}</p>
+      <p className="itemsLink">{label}</p>
     </div>
   );
 };

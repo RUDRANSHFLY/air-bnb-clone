@@ -7,6 +7,7 @@ const Logo = () => {
       <Image
         className={"hidden md:block cursor-pointer absolute"}
         fill
+        priority
         src={"/images/logo.png"}
         alt={"air-BnB logo"}
       />
