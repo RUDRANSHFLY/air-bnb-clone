@@ -3,7 +3,7 @@ import SignInComp from "@/components/auth/SignInComp";
 import SignUpComp from "@/components/auth/SignUpComp";
 import NavBar from "@/components/navbar/NavBar";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const sessionCurrentUser = await getCurrentUser();
