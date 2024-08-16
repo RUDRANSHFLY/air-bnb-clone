@@ -131,7 +131,7 @@ const Category = () => {
       <Container>
         <div
           className={
-            "pt-4 flex flex-row items-center justify-between overflow-x-auto"
+            "pt-4 flex flex-row items-center justify-between overflow-x-scroll scrollbar-hide"
           }
         >
           {categories.map((category) => (

@@ -19,6 +19,12 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
     signOut();
   };
 
+  const handleOnRent = () => {
+    if (currentUser) {
+      handleSignIn();
+    }
+  };
+
   return (
     <Sheet>
       <div className={"relative"}>
@@ -29,7 +35,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               "hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
             }
           >
-            <p>Airbnb your Home</p>
+            <p onClick={handleOnRent}>Airbnb your Home</p>
           </div>
           <SheetTrigger>
             <div
