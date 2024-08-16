@@ -1,9 +1,18 @@
-import Image from "next/image";
+import getCurrentUser from "@/actions/getCurrentUser";
+import SignInComp from "@/components/auth/SignInComp";
+import SignUpComp from "@/components/auth/SignUpComp";
+import NavBar from "@/components/navbar/NavBar";
 
-export default function Home() {
+// export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const sessionCurrentUser = await getCurrentUser();
+
   return (
     <main>
-      <h1>Main</h1>
+      <SignInComp />
+      <SignUpComp />
+      <NavBar currentUser={sessionCurrentUser} />
     </main>
   );
 }
