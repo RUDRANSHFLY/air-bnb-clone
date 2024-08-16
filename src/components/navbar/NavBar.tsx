@@ -1,15 +1,16 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Container from "../helper/Container";
 import Logo from "./Logo";
 import SearchBox from "./SearchBox";
 import UserMenu from "./UserMenu";
 import { User } from "@prisma/client";
+import Category from "../category/Category";
 
 interface NavBarProps {
   currentUser?: User | null;
 }
 
-const NavBar = ({ currentUser }: NavBarProps) => {
+const NavBar = async ({ currentUser }: NavBarProps) => {
   return (
     <nav className={"fixed w-full bg-white z-10 shadow-sm"}>
       <div className={"py-4 border-b-[1px]"}>
@@ -25,6 +26,9 @@ const NavBar = ({ currentUser }: NavBarProps) => {
           </div>
         </Container>
       </div>
+      <Suspense>
+        <Category />
+      </Suspense>
     </nav>
   );
 };
