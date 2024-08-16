@@ -22,6 +22,12 @@ const SignInComp = () => {
   const router = useRouter();
   const isSheetOpen = useStore((state) => state.signInSheetOpen);
   const handleChange = useStore((state) => state.setSignInSheetOpen);
+  const handlleCloseChange = useStore((state) => state.setSignUpSheetOpen);
+
+  const handleSecondarChange = () => {
+    handleChange();
+    handlleCloseChange();
+  };
 
   const {
     register,
@@ -35,8 +41,6 @@ const SignInComp = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-
     signIn("credentials", {
       ...data,
       redirect: false,
@@ -116,7 +120,13 @@ const SignInComp = () => {
           </CardContent>
           <CardFooter className="flex flex-col sm:flex-row gap-3 text-sm justify-center">
             <p>Create an account?</p>
-            <span className={"text-black font-bold"}> Sign-Up</span>
+            <span
+              onClick={handleSecondarChange}
+              className={"text-black font-bold cursor-pointer"}
+            >
+              {" "}
+              Sign-Up
+            </span>
           </CardFooter>
         </Card>
       </SheetContent>

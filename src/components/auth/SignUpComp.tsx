@@ -28,6 +28,12 @@ type Input = {
 const SignUpComp = () => {
   const isSheetOpen = useStore((state) => state.signUpSheetOpen);
   const handleChange = useStore((state) => state.setSignUpSheetOpen);
+  const handleOpenChange = useStore((state) => state.setSignInSheetOpen);
+
+  const handleSecondaryChange = () => {
+    handleChange();
+    handleOpenChange();
+  };
 
   const {
     register,
@@ -119,7 +125,12 @@ const SignUpComp = () => {
           </CardContent>
           <CardFooter className="flex flex-col sm:flex-row gap-3 text-sm justify-center">
             <p>Already have an account?</p>
-            <span className={"text-black font-bold"}>Sign-In</span>
+            <span
+              onClick={handleSecondaryChange}
+              className={"text-black font-bold cursor-pointer"}
+            >
+              Sign-In
+            </span>
           </CardFooter>
         </Card>
       </SheetContent>
