@@ -15,14 +15,17 @@ interface UserMenuProps {
 const UserMenu = ({ currentUser }: UserMenuProps) => {
   const handleSignIn = useStore((state) => state.setSignInSheetOpen);
   const handleSignUp = useStore((state) => state.setSignUpSheetOpen);
+  const handleRent = useStore((state) => state.setRentModalSheetOpen);
   const handleSignOut = () => {
     signOut();
   };
 
   const handleOnRent = () => {
-    if (currentUser) {
+    if (!currentUser) {
       handleSignIn();
+      return;
     }
+    handleRent();
   };
 
   return (
@@ -67,7 +70,10 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
                   <MenuItems itemOnClick={() => {}} label={"My favorites"} />
                   <MenuItems itemOnClick={() => {}} label={"My reservation"} />
                   <MenuItems itemOnClick={() => {}} label={"My properties"} />
-                  <MenuItems itemOnClick={() => {}} label={"Air-BnB my home"} />
+                  <MenuItems
+                    itemOnClick={handleOnRent}
+                    label={"Air-BnB my home"}
+                  />
                   <hr />
                   <MenuItems itemOnClick={handleSignOut} label={"Sign Out"} />
                 </>
