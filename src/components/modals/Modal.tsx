@@ -39,8 +39,10 @@ const Modal = ({
     }
 
     setShowModal(false);
-
-    onCLose();
+    setTimeout(() => {
+      7;
+      onCLose();
+    }, 3000);
   }, [disabled, onCLose]);
 
   const handleSubmit = useCallback(() => {
@@ -50,7 +52,7 @@ const Modal = ({
     onSubmit();
   }, [disabled, onSubmit]);
 
-  const handleSecondary = useCallback(() => {
+  const handleSecondaryAction = useCallback(() => {
     if (disabled || !secondaryAction) {
       return;
     }
@@ -58,9 +60,13 @@ const Modal = ({
     secondaryAction();
   }, [disabled, secondaryAction]);
 
+  if (!open) {
+    return null;
+  }
+
   return (
     <>
-      <div className={""}></div>
+      <div></div>
     </>
   );
 };
