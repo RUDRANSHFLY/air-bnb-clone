@@ -16,6 +16,7 @@ const Logo = () => {
         priority
         src={"/images/logo.png"}
         alt={"air-BnB logo"}
+        sizes={"w-[100vw] h-[100vh]"}
       />
     </div>
   );
