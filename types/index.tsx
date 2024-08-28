@@ -109,8 +109,3 @@ export const categories = [
     description: "this is property is luxurious!",
   },
 ];
-
-
-const countryList = [
-  
-]
