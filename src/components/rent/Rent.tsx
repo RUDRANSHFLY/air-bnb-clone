@@ -1,14 +1,7 @@
 "use client";
 import { useStore } from "@/store/store";
 import React, { useMemo, useState } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
+
 import {
   Card,
   CardContent,
@@ -22,6 +15,9 @@ import { useForm, FieldValues } from "react-hook-form";
 import { Button } from "../ui/button";
 import CountryInput from "../inputs/CountryInput";
 import dynamic from "next/dynamic";
+import Counter from "../steps/Counter";
+import ImageUpload from "../steps/ImageUpload";
+import Modal from "../modals/Modal";
 
 enum RENTSTEPS {
   CATEGORY = 0,
@@ -34,6 +30,7 @@ enum RENTSTEPS {
 
 const Rent = () => {
   const isRentSheetOpen = useStore((state) => state.rentModalSheetOpen);
+  const setRentSheetOpen = useStore((state) => state.setRentModalSheetOpen);
 
   const [step, setStep] = useState(RENTSTEPS.CATEGORY);
 
@@ -60,6 +57,10 @@ const Rent = () => {
 
   const selectedCategory = watch("category", []);
   const selectedCountry = watch("location", []);
+  const selectedGuestCount = watch("guestCount", []);
+  const roomCount = watch("roomCount", []);
+  const bathroomCount = watch("bathroomCount", []);
+  const selectedImageSrc = watch("imageSrc", []);
 
   const Map = useMemo(
     () =>
@@ -85,98 +86,299 @@ const Rent = () => {
     setStep((state) => state + 1);
   };
 
-  return (
-    <Sheet open={isRentSheetOpen}>
-      <SheetContent
-        side={"top"}
-        className={"relative w-fit h-fit mx-auto top-5 bg-neutral-200"}
-      >
-        <SheetHeader>
-          <SheetTitle>Air-BnB u r Home</SheetTitle>
-          <SheetDescription>upload u r home on rent</SheetDescription>
-        </SheetHeader>
-        <Card className={"mt-5"}>
-          {step === RENTSTEPS.CATEGORY && (
-            <>
-              <CardHeader>
-                <CardTitle>
-                  Which of these best describes your place ?
-                </CardTitle>
-                <CardDescription>Pick a Category</CardDescription>
-              </CardHeader>
-              <CardContent
-                className={
-                  "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-h-[50vh] overflow-y-scroll gap-4 scrollbar-hide"
-                }
-              >
-                {categories.map((category) => (
-                  <div className={"col-span-1"} key={category.label}>
-                    <CategoryInput
-                      icon={category.icon}
-                      categoryName={category.label}
-                      categorySelected={selectedCategory === category.label}
-                      onClick={(category) =>
-                        setCustomValue("category", category)
-                      }
-                    />
-                  </div>
-                ))}
-              </CardContent>
-            </>
-          )}
-          {step === RENTSTEPS.LOCATION && (
-            <>
-              <CardHeader>
-                <CardTitle>Where is your place Located ?</CardTitle>
-                <CardDescription>Help guests find you!</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CountryInput
-                  currentCountry={selectedCountry}
-                  onCountrySelect={(country) => {
-                    setCustomValue("location", country);
-                  }}
-                />
-              </CardContent>
-              <CardContent>
-                <Map
-                  center={selectedCountry?.lating}
-                  countryName={selectedCountry?.Label}
-                />
-              </CardContent>
-            </>
-          )}
+  const actionLabel = useMemo(() => {
+    if (step === RENTSTEPS.PRICE) {
+      return "Create";
+    }
+    return "Next";
+  }, [step]);
 
-          <CardContent className={"flex justify-center"}>
-            {step === RENTSTEPS.CATEGORY ? (
-              <Button
-                onClick={onNext}
-                className={"w-52 bg-red-600 hover:bg-red-700"}
-              >
-                Next
-              </Button>
-            ) : (
-              <div className={"flex justify-center gap-5"}>
-                <Button
-                  onClick={onBack}
-                  className={"w-52 border-black"}
-                  variant={"outline"}
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={onNext}
-                  className={"w-52 bg-red-600 hover:bg-red-700"}
-                  variant={"default"}
-                >
-                  Next
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </SheetContent>
-    </Sheet>
+  const secondaryActionLabel = useMemo(() => {
+    if (step === RENTSTEPS.CATEGORY) {
+      return undefined;
+    }
+    return "Back";
+  }, [step]);
+
+  let bodyContent = (
+    <Card>
+      <CardContent>
+        <CardHeader>
+          <CardTitle>Which of these best describes your place ?</CardTitle>
+          <CardDescription>Pick a Category</CardDescription>
+        </CardHeader>
+        <CardContent
+          className={
+            "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-h-[50vh] overflow-y-scroll gap-4 scrollbar-hide"
+          }
+        >
+          {categories.map((category) => (
+            <div className={"col-span-1"} key={category.label}>
+              <CategoryInput
+                icon={category.icon}
+                categoryName={category.label}
+                categorySelected={selectedCategory === category.label}
+                onClick={(category) => setCustomValue("category", category)}
+              />
+            </div>
+          ))}
+        </CardContent>
+      </CardContent>
+    </Card>
+  );
+
+  if (step === RENTSTEPS.LOCATION) {
+    bodyContent = (
+      <Card>
+        <CardHeader>
+          <CardTitle>Where is your place Located ?</CardTitle>
+          <CardDescription>Help guests find you!</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <CountryInput
+            currentCountry={selectedCountry}
+            onCountrySelect={(country) => {
+              setCustomValue("location", country);
+            }}
+          />
+        </CardContent>
+        <CardContent>
+          <Map
+            center={selectedCountry?.lating}
+            countryName={selectedCountry?.Label}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (step === RENTSTEPS.INFO) {
+    bodyContent = (
+      <Card>
+        <CardHeader>
+          <CardTitle>Share some basic about your place</CardTitle>
+          <CardDescription>What ammenties do u have ?</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Counter
+            title={"Guests"}
+            subtitle={"How many guests do u allow ?"}
+            value={selectedGuestCount}
+            onChange={(guest) => {
+              setCustomValue("guestCount", guest);
+            }}
+          />
+          <hr />
+        </CardContent>
+        <CardContent>
+          <Counter
+            title={"Rooms"}
+            subtitle={"How many rooms do u have ?"}
+            value={roomCount}
+            onChange={(room) => {
+              setCustomValue("roomCount", room);
+            }}
+          />
+        </CardContent>
+        <CardContent>
+          <Counter
+            title={"Bathrooms"}
+            subtitle={"How many bathrooms do u have ?"}
+            value={bathroomCount}
+            onChange={(bathroom) => {
+              setCustomValue("bathroomCount", bathroom);
+            }}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (step === RENTSTEPS.IMAGES) {
+    bodyContent = (
+      <Card>
+        <CardHeader>
+          <CardTitle>Add a Photho of your place</CardTitle>
+          <CardDescription>
+            Show guests what your place look like!
+          </CardDescription>
+        </CardHeader>
+        <CardContent className={"!importantz-50"}>
+          <ImageUpload
+            onChange={(image) => {
+              setCustomValue("imageSrc", image);
+            }}
+            value={selectedImageSrc}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <div>
+      <Modal
+        title={"Air-BnB u r Home  "}
+        body={bodyContent}
+        isOpen={isRentSheetOpen}
+        onCLose={setRentSheetOpen}
+        onSubmit={onNext}
+        actionLabel={actionLabel}
+        secondaryActionLabel={secondaryActionLabel}
+        secondaryAction={step === RENTSTEPS.CATEGORY ? undefined : onBack}
+      />
+    </div>
+
+    // <div>
+    //   <Sheet open={isRentSheetOpen}>
+    //     <SheetContent
+    //       side={"top"}
+    //       className={"w-fit h-fit mx-auto top-5 bg-neutral-200"}
+    //     >
+    //       <SheetHeader>
+    //         <SheetTitle>Air-BnB u r Home</SheetTitle>
+    //         <SheetDescription>upload u r home on rent</SheetDescription>
+    //       </SheetHeader>
+    //       <Card className={"mt-5"}>
+    //         {step === RENTSTEPS.CATEGORY && (
+    //           <>
+    //             <CardHeader>
+    //               <CardTitle>
+    //                 Which of these best describes your place ?
+    //               </CardTitle>
+    //               <CardDescription>Pick a Category</CardDescription>
+    //             </CardHeader>
+    //             <CardContent
+    //               className={
+    //                 "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-h-[50vh] overflow-y-scroll gap-4 scrollbar-hide"
+    //               }
+    //             >
+    //               {categories.map((category) => (
+    //                 <div className={"col-span-1"} key={category.label}>
+    //                   <CategoryInput
+    //                     icon={category.icon}
+    //                     categoryName={category.label}
+    //                     categorySelected={selectedCategory === category.label}
+    //                     onClick={(category) =>
+    //                       setCustomValue("category", category)
+    //                     }
+    //                   />
+    //                 </div>
+    //               ))}
+    //             </CardContent>
+    //           </>
+    //         )}
+    //         {step === RENTSTEPS.LOCATION && (
+    //           <>
+    //             <CardHeader>
+    //               <CardTitle>Where is your place Located ?</CardTitle>
+    //               <CardDescription>Help guests find you!</CardDescription>
+    //             </CardHeader>
+    //             <CardContent>
+    //               <CountryInput
+    //                 currentCountry={selectedCountry}
+    //                 onCountrySelect={(country) => {
+    //                   setCustomValue("location", country);
+    //                 }}
+    //               />
+    //             </CardContent>
+    //             <CardContent>
+    //               <Map
+    //                 center={selectedCountry?.lating}
+    //                 countryName={selectedCountry?.Label}
+    //               />
+    //             </CardContent>
+    //           </>
+    //         )}
+    //         {step === RENTSTEPS.INFO && (
+    //           <div className={"flex flex-col gap-8"}>
+    //             <CardHeader>
+    //               <CardTitle>Share some basic about your place</CardTitle>
+    //               <CardDescription>What ammenties do u have ?</CardDescription>
+    //             </CardHeader>
+    //             <CardContent>
+    //               <Counter
+    //                 title={"Guests"}
+    //                 subtitle={"How many guests do u allow ?"}
+    //                 value={selectedGuestCount}
+    //                 onChange={(guest) => {
+    //                   setCustomValue("guestCount", guest);
+    //                 }}
+    //               />
+    //               <hr />
+    //             </CardContent>
+    //             <CardContent>
+    //               <Counter
+    //                 title={"Rooms"}
+    //                 subtitle={"How many rooms do u have ?"}
+    //                 value={roomCount}
+    //                 onChange={(room) => {
+    //                   setCustomValue("roomCount", room);
+    //                 }}
+    //               />
+    //             </CardContent>
+    //             <CardContent>
+    //               <Counter
+    //                 title={"Bathrooms"}
+    //                 subtitle={"How many bathrooms do u have ?"}
+    //                 value={bathroomCount}
+    //                 onChange={(bathroom) => {
+    //                   setCustomValue("bathroomCount", bathroom);
+    //                 }}
+    //               />
+    //             </CardContent>
+    //           </div>
+    //         )}
+    //         {step === RENTSTEPS.IMAGES && (
+    //           <div>
+    //             <CardHeader>
+    //               <CardTitle>Add a Photho of your place</CardTitle>
+    //               <CardDescription>
+    //                 Show guests what your place look like!
+    //               </CardDescription>
+    //             </CardHeader>
+    //             <CardContent className={"!importantz-50"}>
+    //               <ImageUpload
+    //                 onChange={(image) => {
+    //                   setCustomValue("imageSrc", image);
+    //                 }}
+    //                 value={selectedImageSrc}
+    //               />
+    //             </CardContent>
+    //           </div>
+    //         )}
+
+    //         <CardContent className={"flex justify-center"}>
+    //           {step === RENTSTEPS.CATEGORY ? (
+    //             <Button
+    //               onClick={onNext}
+    //               className={"w-52 bg-red-600 hover:bg-red-700"}
+    //             >
+    //               Next
+    //             </Button>
+    //           ) : (
+    //             <div className={"flex justify-center gap-5"}>
+    //               <Button
+    //                 onClick={onBack}
+    //                 className={"w-52 border-black"}
+    //                 variant={"outline"}
+    //               >
+    //                 Back
+    //               </Button>
+    //               <Button
+    //                 onClick={onNext}
+    //                 className={"w-52 bg-red-600 hover:bg-red-700"}
+    //                 variant={"default"}
+    //               >
+    //                 Next
+    //               </Button>
+    //             </div>
+    //           )}
+    //         </CardContent>
+    //       </Card>
+    //     </SheetContent>
+    //   </Sheet>
+    // </div>
   );
 };
 
