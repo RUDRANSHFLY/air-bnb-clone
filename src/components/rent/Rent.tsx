@@ -1,7 +1,9 @@
 "use client";
+import "loaders-ui/dist/main/index.min.css";
+import { RotatingBars } from "loaders-ui";
+
 import { useStore } from "@/store/store";
 import React, { useMemo, useState } from "react";
-
 import {
   Card,
   CardContent,
@@ -333,17 +335,26 @@ const Rent = () => {
 
   return (
     <div>
-      <Toaster />
-      <Modal
-        title={"Air-BnB u r Home"}
-        body={bodyContent}
-        isOpen={isRentSheetOpen}
-        onCLose={setRentSheetOpen}
-        onSubmit={handleSubmit(onSubmit)}
-        actionLabel={actionLabel}
-        secondaryActionLabel={secondaryActionLabel}
-        secondaryAction={step === RENTSTEPS.CATEGORY ? undefined : onBack}
-      />
+      {loading && (
+        <div>
+          <RotatingBars />
+        </div>
+      )}
+      {!loading && (
+        <div>
+          <Toaster />
+          <Modal
+            title={"Air-BnB u r Home"}
+            body={bodyContent}
+            isOpen={isRentSheetOpen}
+            onCLose={setRentSheetOpen}
+            onSubmit={handleSubmit(onSubmit)}
+            actionLabel={actionLabel}
+            secondaryActionLabel={secondaryActionLabel}
+            secondaryAction={step === RENTSTEPS.CATEGORY ? undefined : onBack}
+          />
+        </div>
+      )}
     </div>
   );
 };
