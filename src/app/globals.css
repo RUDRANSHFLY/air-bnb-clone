@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-date-range/dist/styles.css";
+@import "react-date-range/dist/theme/default.css";
+
 * {
   margin: 0%;
   padding: 0%;
@@ -87,4 +90,13 @@ body :root {
 .leaflet-pane,
 .leaflet-top {
   z-index: 0 !important;
+}
+
+.rdrMonth {
+  width: 100% !important;
+}
+
+.rdrCalendarWrapper {
+  font-size: 16px !important;
+  width: 100% !important;
 }
