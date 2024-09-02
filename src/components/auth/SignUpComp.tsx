@@ -18,6 +18,7 @@ import { Label } from "../ui/label";
 import { GithubIcon, GoogleIcon } from "hugeicons-react";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 type Input = {
   userName: string;
@@ -54,7 +55,7 @@ const SignUpComp = () => {
         handleChange();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error);
       });
   };
 
