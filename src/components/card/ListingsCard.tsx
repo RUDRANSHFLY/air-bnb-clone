@@ -16,7 +16,7 @@ interface ListingCardProps {
   disabled?: boolean;
   actionLabel?: string;
   actionId: string;
-  currentUser: User | null;
+  currentUser?: User | null;
 }
 
 const ListingsCard = ({
@@ -72,7 +72,7 @@ const ListingsCard = ({
   return (
     <div
       onClick={() => router.push(`listings/${data.id}`)}
-      className={"col-span-1 cursor-pointer group"}
+      className={"col-span-1 cursor-pointer group "}
     >
       <div className={"flex flex-col gap-2 w-full"}>
         <div
@@ -87,7 +87,7 @@ const ListingsCard = ({
             }
           />
           <div className={"absolute className top-3 right-3"}>
-            <HeartButton listingId={data.id} currentUser={currentUser} />
+            <HeartButton listingID={data.id} currentUser={currentUser} />
           </div>
         </div>
         <div className={"font-semibold text-lg"}>
