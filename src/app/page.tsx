@@ -39,7 +39,7 @@ export default async function Home() {
                   data={listing}
                   key={listing.id}
                   actionId={""}
-                  currentUser={null}
+                  currentUser={sessionCurrentUser}
                 />
               ))}
             </div>
