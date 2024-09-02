@@ -17,6 +17,7 @@ import { Label } from "../ui/label";
 import { GithubIcon, GoogleIcon } from "hugeicons-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const SignInComp = () => {
   const router = useRouter();
@@ -48,6 +49,7 @@ const SignInComp = () => {
       handleChange();
 
       if (callBack?.ok) {
+        toast.success("Access Granted");
         router.refresh();
       }
 
