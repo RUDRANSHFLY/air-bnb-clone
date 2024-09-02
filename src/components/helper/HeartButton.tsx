@@ -1,17 +1,21 @@
 "use client";
 
+import { useFavorite } from "@/hooks/getFavourite";
 import { User } from "@prisma/client";
 import { Heart } from "lucide-react";
 import React from "react";
+import { SafeUser } from "../../../typings";
 
 interface HeartButtonProps {
-  listingId: string;
+  listingID: string;
   currentUser?: User | null;
 }
 
-const HeartButton = ({ currentUser, listingId }: HeartButtonProps) => {
-  const hasFavorited = true;
-  const toggleFavorite = () => {};
+const HeartButton = ({ currentUser, listingID }: HeartButtonProps) => {
+  const { hasFavorited, toggleFavorite } = useFavorite({
+    listingID,
+    currentUser,
+  });
 
   return (
     <div
