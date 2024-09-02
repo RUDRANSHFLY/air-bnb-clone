@@ -13,7 +13,7 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    const currentUser = client.user.findUnique({
+    const currentUser = await client.user.findUnique({
       where: {
         email: session.user.email as string,
       },
