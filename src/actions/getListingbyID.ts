@@ -1,16 +1,16 @@
 import client from "@/libs/prsimaDB";
 
 interface IParams {
-  listingID?: string;
+  listingId?: string;
 }
 
-export default async function getListingByID(params: IParams) {
+export default async function getListingById(params: IParams) {
   try {
-    const { listingID } = params;
+    const { listingId } = params;
 
     const listing = await client?.listing.findUnique({
       where: {
-        id: listingID,
+        id: listingId,
       },
       include: {
         user: true,
