@@ -8,15 +8,16 @@ import { format } from "date-fns";
 import Image from "next/image";
 import HeartButton from "../helper/HeartButton";
 import ButtonHelper from "../helper/ButtonHelper";
+import { SafeListings, SafeResevations, SafeUser } from "../../../typings";
 
 interface ListingCardProps {
-  data: Listing;
-  reservation?: Reservation;
+  data: SafeListings;
+  reservation?: SafeResevations;
   onAction?: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
   actionId: string;
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const ListingsCard = ({
