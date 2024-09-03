@@ -1,18 +1,17 @@
 import getCurrentUser from "@/actions/getCurrentUser";
-import getListingByID from "@/actions/getListingbyID";
+import getListingById from "@/actions/getListingbyId";
 import getReservations from "@/actions/getReservations";
 import ListingClient from "@/components/card/ListingClient";
-import NavBar from "@/components/navbar/NavBar";
 import EmptyState from "@/components/rent/EmptyState";
 import React from "react";
 import { Toaster } from "react-hot-toast";
 
 interface IParams {
-  listingID?: string;
+  listingId?: string;
 }
 
 const ListingPage = async ({ params }: { params: IParams }) => {
-  const listing = await getListingByID(params);
+  const listing = await getListingById(params);
   const currentUser = await getCurrentUser();
   const reservation = await getReservations(params);
 
