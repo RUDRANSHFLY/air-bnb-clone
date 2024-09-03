@@ -8,7 +8,7 @@ import { SafeUser } from "../../../typings";
 
 interface HeartButtonProps {
   listingID: string;
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const HeartButton = ({ currentUser, listingID }: HeartButtonProps) => {
