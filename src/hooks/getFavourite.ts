@@ -4,10 +4,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { Toast, toast } from "react-hot-toast";
+import { SafeUser } from "../../typings";
 
 interface IUseFavorite {
   listingID: string;
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 export const useFavorite = ({ currentUser, listingID }: IUseFavorite) => {
