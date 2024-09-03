@@ -1,19 +1,19 @@
 import client from "@/libs/prsimaDB";
 
 interface IParams {
-  listingID?: string;
+  listingId?: string;
   userId?: string;
   authorId?: string;
 }
 
 export default async function getReservations(params: IParams) {
   try {
-    const { authorId, listingID, userId } = params;
+    const { authorId, listingId, userId } = params;
 
     const query: any = {};
 
-    if (listingID) {
-      query.listingId = listingID;
+    if (listingId) {
+      query.listingId = listingId;
     }
 
     if (userId) {
@@ -21,7 +21,7 @@ export default async function getReservations(params: IParams) {
     }
 
     if (authorId) {
-      query.listingId = { userId: authorId };
+      query.listing = { userId: authorId };
     }
 
     const reservations = await client.reservation.findMany({
