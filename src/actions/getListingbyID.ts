@@ -5,25 +5,33 @@ interface IParams {
 }
 
 export default async function getListingByID(params: IParams) {
-  const { listingID } = params;
+  try {
+    const { listingID } = params;
 
-  const listing = await client?.listing.findUnique({
-    where: {
-      id: listingID,
-    },
-    include: {
-      user: true,
-    },
-  });
+    const listing = await client?.listing.findUnique({
+      where: {
+        id: listingID,
+      },
+      include: {
+        user: true,
+      },
+    });
 
-  if (!listing) {
-    return null;
+    if (!listing) {
+      return null;
+    }
+
+    return {
+      ...listing,
+      createdAt: listing.createdAt.toISOString(),
+      user: {
+        ...listing.user,
+        createdAt: listing.user.createdAt.toISOString(),
+        updatedAt: listing.user.updatedAt.toISOString(),
+        emailVerified: listing.user.emailVerified?.toISOString() || null,
+      },
+    };
+  } catch (error: any) {
+    throw new Error(error);
   }
-
-  return {
-    ...listing,
-    user: {
-      ...listing.user,
-    },
-  };
 }
