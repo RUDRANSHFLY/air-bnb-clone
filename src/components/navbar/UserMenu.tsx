@@ -7,9 +7,11 @@ import MenuItems from "./MenuItems";
 import { useStore } from "@/store/store";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { SafeUser } from "../../../typings";
 
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
@@ -27,6 +29,8 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
     }
     handleRent();
   };
+
+  const router = useRouter();
 
   return (
     <Sheet>
@@ -66,7 +70,12 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
             <div className={"flex flex-col cursor-pointer"}>
               {currentUser ? (
                 <>
-                  <MenuItems itemOnClick={() => {}} label={"My Trips"} />
+                  <MenuItems
+                    itemOnClick={() => {
+                      router.push("/trips");
+                    }}
+                    label={"My Trips"}
+                  />
                   <MenuItems itemOnClick={() => {}} label={"My favorites"} />
                   <MenuItems itemOnClick={() => {}} label={"My reservation"} />
                   <MenuItems itemOnClick={() => {}} label={"My properties"} />
