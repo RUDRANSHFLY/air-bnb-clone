@@ -17,11 +17,11 @@ export default async function Home() {
   const isEmpty = listings.length === 0;
 
   return (
-    <main className={"relative"}>
-      <SignInComp />
+    <main className={"relative font-mono"}>
+      {/* <SignInComp />
       <SignUpComp />
-      <Rent />
-      <NavBar currentUser={sessionCurrentUser} />
+      <Rent /> */}
+      {/* <NavBar currentUser={sessionCurrentUser} /> */}
       <div className={"pt-28 pb-20"}>
         <Container>
           {isEmpty ? (
