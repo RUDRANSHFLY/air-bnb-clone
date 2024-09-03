@@ -5,7 +5,13 @@ export default async function getListings() {
     const listings = client.listing.findMany({
       orderBy: { createdAt: "desc" },
     });
-    return listings;
+
+    const safeListings = (await listings).map((listing) => ({
+      ...listing,
+      createdAt: listing.createdAt.toISOString(),
+    }));
+
+    return safeListings;
   } catch (error: any) {
     throw new Error(error);
   }
