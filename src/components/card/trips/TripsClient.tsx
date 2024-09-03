@@ -40,7 +40,7 @@ const TripsClient = ({ reservation, currentUser }: TripsClientProps) => {
 
   return (
     <Container>
-      <div className={"flex flex-col gap-2"}>
+      <div className={"flex flex-col gap-2 font-mono"}>
         <h1 className={"text-3xl text-black font-bold"}>Trips</h1>
         <h2 className={"text-md font-semibold italic text-neutral-600"}>
           Where you&apos;ve been and where you&apos;re going
