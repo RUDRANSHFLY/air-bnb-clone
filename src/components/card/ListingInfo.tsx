@@ -5,9 +5,10 @@ import { IconType } from "react-icons";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import ListingCategory from "./ListingCategory";
 import dynamic from "next/dynamic";
+import { SafeUser } from "../../../typings";
 
 interface ListingInfoProps {
-  user: User;
+  user: SafeUser;
   category:
     | {
         icon: ReactElement;
