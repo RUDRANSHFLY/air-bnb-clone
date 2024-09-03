@@ -13,11 +13,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ListingReservation from "./ListingReservation";
 import { Range } from "react-date-range";
+import { SafeListings, SafeResevations, SafeUser } from "../../../typings";
 
 interface ListingClientProps {
-  reservation?: Reservation[];
-  listing: Listing & { user: User };
-  currentUser?: User | null;
+  reservation?: SafeResevations[];
+  listing: SafeListings & { user: SafeUser };
+  currentUser?: SafeUser | null;
 }
 
 const initialDateRange = {
@@ -55,6 +56,8 @@ const ListingClient = ({
         toast.success("Reservation Done");
         setDateRange(initialDateRange);
         router.refresh();
+
+        router.push("/trips");
       })
       .catch(() => {
         toast.error("Something went wrong");
