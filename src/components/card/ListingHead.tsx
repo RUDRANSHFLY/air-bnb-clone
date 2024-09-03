@@ -2,13 +2,14 @@ import useCountries from "@/actions/getCountires";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import HeartButton from "../helper/HeartButton";
+import { SafeUser } from "../../../typings";
 
 interface ListingHeadProps {
   title: string;
   imageSrc: string;
   locationValue: string;
   id: string;
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const ListingHead = ({
