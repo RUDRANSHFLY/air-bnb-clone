@@ -5,7 +5,6 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import MenuItems from "./MenuItems";
 import { useStore } from "@/store/store";
-import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "../../../typings";
