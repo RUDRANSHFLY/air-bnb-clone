@@ -5,9 +5,10 @@ import SearchBox from "./SearchBox";
 import UserMenu from "./UserMenu";
 import { User } from "@prisma/client";
 import Category from "../category/Category";
+import { SafeUser } from "../../../typings";
 
 interface NavBarProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const NavBar = async ({ currentUser }: NavBarProps) => {
