@@ -17,7 +17,7 @@ const TripPage = async () => {
 
   if (!currentUser) {
     return (
-      <div>
+      <div className={"relative"}>
         <EmptyState title={"UnAuthorized"} subtitle={"Please Login "} />
       </div>
     );
@@ -25,7 +25,7 @@ const TripPage = async () => {
 
   if (reservation.length === 0) {
     return (
-      <div>
+      <div className={"relative"}>
         <EmptyState
           title={"No Trips found"}
           subtitle={"looks like you have't reserved any trips. "}
@@ -35,9 +35,9 @@ const TripPage = async () => {
   }
 
   return (
-    <div>
+    <div className={"relative"}>
       <Toaster />
-      <NavBar currentUser={currentUser} />
+      {/* <NavBar currentUser={currentUser} /> */}
       <div className={"pt-28 pb-20"}>
         <TripsClient reservation={reservation} />
       </div>
