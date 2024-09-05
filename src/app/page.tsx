@@ -1,27 +1,23 @@
 import getCurrentUser from "@/actions/getCurrentUser";
-import getListings from "@/actions/getListings";
-import SignInComp from "@/components/auth/SignInComp";
-import SignUpComp from "@/components/auth/SignUpComp";
+import getListings, { IListingsParams } from "@/actions/getListings";
 import ListingsCard from "@/components/card/ListingsCard";
 import Container from "@/components/helper/Container";
-import NavBar from "@/components/navbar/NavBar";
 import EmptyState from "@/components/rent/EmptyState";
-import Rent from "@/components/rent/Rent";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
+interface HomeProps {
+  searchParams: IListingsParams;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
   const sessionCurrentUser = await getCurrentUser();
-  const listings = await getListings();
+  const listings = await getListings(searchParams);
 
   const isEmpty = listings.length === 0;
 
   return (
     <main className={"relative font-mono"}>
-      {/* <SignInComp />
-      <SignUpComp />
-      <Rent /> */}
-      {/* <NavBar currentUser={sessionCurrentUser} /> */}
       <div className={"pt-28 pb-20"}>
         <Container>
           {isEmpty ? (
