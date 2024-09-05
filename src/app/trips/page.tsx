@@ -4,7 +4,6 @@ import EmptyState from "@/components/rent/EmptyState";
 import getCurrentUser from "@/actions/getCurrentUser";
 import getReservations from "@/actions/getReservations";
 import TripsClient from "@/components/card/trips/TripsClient";
-import NavBar from "@/components/navbar/NavBar";
 import { Toaster } from "react-hot-toast";
 
 export const dynamic = "force-dynamic";
@@ -37,9 +36,8 @@ const TripPage = async () => {
   return (
     <div className={"relative"}>
       <Toaster />
-      {/* <NavBar currentUser={currentUser} /> */}
       <div className={"pt-28 pb-20"}>
-        <TripsClient reservation={reservation} />
+        <TripsClient reservation={reservation} currentUser={currentUser} />
       </div>
     </div>
   );
