@@ -1,12 +1,18 @@
+"use client";
+
+import { useStore } from "@/store/store";
 import { Search } from "lucide-react";
 import React from "react";
 
 const SearchBox = () => {
+  const setFilterModal = useStore((state) => state.setFilterSheetOpen);
+
   return (
     <div
       className={
         "border-[1px] w-full md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition-shadow cursor-pointer"
       }
+      onClick={setFilterModal}
     >
       <div className={"flex flex-row items-center justify-between"}>
         <div className={"text-sm font-semibold px-6"}>
