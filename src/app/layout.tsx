@@ -6,6 +6,7 @@ import NavBar from "@/components/navbar/NavBar";
 import SignInComp from "@/components/auth/SignInComp";
 import SignUpComp from "@/components/auth/SignUpComp";
 import Rent from "@/components/rent/Rent";
+import FilterModel from "@/components/helper/FilterModel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
         <NavBar currentUser={sessionCurrentUser} />
         <SignInComp />
         <SignUpComp />
+        <FilterModel />
         <Rent />
         {children}
       </body>
