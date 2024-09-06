@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import getCurrentUser from "@/actions/getCurrentUser";
-
 import client from "@/libs/prsimaDB";
 
 interface IParams {
