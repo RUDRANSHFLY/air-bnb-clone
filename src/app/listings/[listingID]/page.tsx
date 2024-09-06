@@ -26,7 +26,6 @@ const ListingPage = async ({ params }: { params: IParams }) => {
   return (
     <div>
       <Toaster />
-      {/* <NavBar currentUser={currentUser} /> */}
       <div className={"pt-28 pb-20"}>
         <ListingClient
           listing={listing}
