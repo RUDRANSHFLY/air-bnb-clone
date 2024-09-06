@@ -184,7 +184,7 @@ const FilterModel = () => {
         <Counter
           title={"BathRoom"}
           subtitle={"How many Bathrooms do u need ?"}
-          value={guestCount}
+          value={bathroomCount}
           onChange={(value) => setBathroomCount(value)}
         />
       </div>
