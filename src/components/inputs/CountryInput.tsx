@@ -1,12 +1,14 @@
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import Select from "react-select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "../ui/select";
 import useCountries from "@/actions/getCountires";
+import { control } from "leaflet";
 
 export type CountrySelectValue = {
   flag: string;
@@ -29,6 +31,8 @@ const CountryInput = ({
 }: CountrySelectProps) => {
   const countries = useCountries().getAll();
 
+  const { getAll } = useCountries();
+
   const handleValueChange = (value: string) => {
     const selectedCountry = countries.find(
       (country) => country.value === value
@@ -39,8 +43,39 @@ const CountryInput = ({
   };
 
   return (
-    <div>
+    <div className="text-black">
       <Select
+        placeholder={"AnyWhere"}
+        isClearable
+        options={getAll()}
+        value={value}
+        onChange={(value) => onCountrySelect(value as CountrySelectValue)}
+        formatOptionLabel={(option: any) => (
+          <div className={"flex flex-row items-center gap-3"}>
+            <div>{option.flag}</div>
+            <div className="">
+              {option.Label} ,
+              <span className={"text-neutral-500 ml-1"}>{option.region}</span>
+            </div>
+          </div>
+        )}
+        classNames={{
+          control: () => "p-3 border-2",
+          input: () => "text-lg",
+          option: () => "text-lg",
+        }}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            primary: "black",
+            primary25: "#44e4e6",
+          },
+        })}
+      />
+
+      {/* <Select
         onValueChange={handleValueChange}
         value={currentCountry ? currentCountry.value : "Select your Country"}
       >
@@ -61,7 +96,7 @@ const CountryInput = ({
             </SelectItem>
           ))}
         </SelectContent>
-      </Select>
+      </Select> */}
     </div>
   );
 };
