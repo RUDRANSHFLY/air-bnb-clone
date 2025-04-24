@@ -13,8 +13,7 @@ import {
 } from "../ui/card";
 import { categories } from "../../../types";
 import CategoryInput from "../category/CategoryInput";
-import { useForm, FieldValues, SubmitHandler, set } from "react-hook-form";
-import { Button } from "../ui/button";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import CountryInput from "../inputs/CountryInput";
 import dynamic from "next/dynamic";
 import Counter from "../steps/Counter";

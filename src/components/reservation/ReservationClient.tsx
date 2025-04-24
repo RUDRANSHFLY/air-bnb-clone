@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ListingsCard from "../card/ListingsCard";
+import Heading from "../helper/Heading";
 
 interface ReservationClientProps {
   reservation: SafeResevations[];
@@ -41,12 +42,7 @@ const ReservationClient = ({
 
   return (
     <div>
-      <div className={"flex flex-col gap-2 font-mono"}>
-        <h1 className={"text-3xl text-black font-bold"}>Reservation</h1>
-        <h2 className={"text-md font-semibold italic text-neutral-600"}>
-          Bookings on your properties
-        </h2>{" "}
-      </div>
+      <Heading title={"Reservation"} subTitle={"Bookings on your properties"} />
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
         {reservation.map((reservation) => (
           <ListingsCard

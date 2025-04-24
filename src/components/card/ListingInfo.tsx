@@ -1,7 +1,5 @@
 import useCountries from "@/actions/getCountires";
-import { Listing, User } from "@prisma/client";
 import { ReactElement } from "react";
-import { IconType } from "react-icons";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import ListingCategory from "./ListingCategory";
 import dynamic from "next/dynamic";

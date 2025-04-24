@@ -1,13 +1,13 @@
 "use client";
 
 import Container from "@/components/helper/Container";
-import { Listing, Reservation, User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import ListingsCard from "../ListingsCard";
 import { SafeResevations, SafeUser } from "../../../../typings";
+import Heading from "@/components/helper/Heading";
 
 interface TripsClientProps {
   reservation: SafeResevations[];
@@ -40,12 +40,10 @@ const TripsClient = ({ reservation, currentUser }: TripsClientProps) => {
 
   return (
     <Container>
-      <div className={"flex flex-col gap-2 font-mono"}>
-        <h1 className={"text-3xl text-black font-bold"}>Trips</h1>
-        <h2 className={"text-md font-semibold italic text-neutral-600"}>
-          Where you&apos;ve been and where you&apos;re going
-        </h2>
-      </div>
+      <Heading
+        title={"Trips"}
+        subTitle={"Where you've been and where you're going"}
+      />
       <div
         className={
           "mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8"
